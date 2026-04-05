@@ -102,6 +102,58 @@ export class LinkedList{
     }
 
     insertAt(index, ...values){
-        
+        if(index<0) throw new RangeError("Index out of range.");
+        if(index===0){
+            let tempTail = this.head;
+            for(let j = values.length-1; j>=0; j--){
+                    let newNode = new Node(values[j], tempTail);
+                    tempTail = newNode;
+                    if(j===0) this.head = newNode;
+                }
+        }
+        let temp = this.head;
+        for(let i=0; i <= index; i++){
+            if(temp===null) throw new RangeError("Index out of range.");
+            if(i===index-1){
+                let tempHead = temp;
+                let tempTail = temp.nextNode;
+                //iterate through backwards, so you always know next
+                for(let j = values.length-1; j>=0; j--){
+                    let newNode = new Node(values[j], tempTail);
+                    tempTail = newNode;
+                }
+                tempHead.nextNode = tempTail;
+                return;
+            }
+            temp = temp.nextNode;
+        }
+    }
+
+    removeAt(index){
+        if(index<0 || index>this.size()-1) throw new RangeError("Index out of range.");
+        let temp = this.head;
+        //remove head
+        if(index===0){
+            this.head = temp.nextNode;
+        //remove tail
+        } else if (index===this.size()-1){
+            for(let i = 0; i<index; i++){
+                if(i===index-1) {
+                    temp.nextNode = null;
+                    return;
+                }
+                temp = temp.nextNode;
+            }
+        } else{
+            for(let i = 0; i<index; i++){
+                if(i===index-1){
+                    temp.nextNode = temp.nextNode.nextNode;
+                    return;
+                }
+                temp = temp.nextNode;
+                console.log(temp);
+            }
+            
+        }
     }
 }
